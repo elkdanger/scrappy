@@ -10,13 +10,11 @@ let sources = {
 
 /* Browser sync */
 gulp.task('browser-sync', () => {
-
   browserSync.init({
     proxy: 'localhost:3000',
     port: 4202,
     open: false
   })
-
 })
 
 gulp.task('sass', () =>    
@@ -28,15 +26,38 @@ gulp.task('sass', () =>
         .pipe(browserSync.stream())
 )
 
-gulp.task('serve', ['browser-sync'], () => {
+gulp.task('build', () => {
+    
+    // Copy front-end assets
+    gulp.src('node_modules/bootstrap/dist/**/*.*')
+        .pipe(gulp.dest('public/vendor/bootstrap'))
+        
+    gulp.src([
+     'node_modules/react/dist/**/*.*',
+     'node_modules/react-dom/dist/**/*.*'   
+    ])
+    .pipe(gulp.dest('public/vendor/react'))
+
+})
+
+gulp.task('serve', ['build', 'browser-sync'], () => {
 
   plugins.nodemon({
     script: 'bin/www',
-    ext: 'js hbs',
-    env: { 'NODE_ENV': 'development' }
+    ext: 'js',
+    env: { 'NODE_ENV': 'development' },
+    ignore: [
+        'node_modules',
+        'public/vendor',
+        'tests'
+    ]
+  }).on('restart', () => {
+      setTimeout(browserSync.reload, 500)
   })
   
-  gulp.watch('views/**/*.hbs')
+  gulp.watch([
+    'views/**/*.hbs'
+  ])
     .on('change', browserSync.reload)
     
   gulp.watch(sources.sass, ['sass'])
