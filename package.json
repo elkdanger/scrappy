@@ -1,6 +1,7 @@
 {
   "name": "scrappy",
   "version": "0.0.0",
+  "description": "Easy week-by-week personal journalling",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
