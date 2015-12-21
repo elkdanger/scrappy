@@ -1,0 +1,47 @@
+<h1 class="page-header">Login</h1>
+
+<div class="col-sm-offset-3 col-sm-6">
+
+    <form action="/login" method="post" class="form-horizontal">
+        
+        <div class="form-group">
+            <label for="email" class="col-sm-3">Email address</label>
+            <div class="col-sm-9">
+                <input type="email" name="email" id="email" class="form-control">    
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="password" class="col-sm-3">Password</label>
+            <div class="col-sm-9">
+                <input type="password" name="password" id="password" class="form-control">    
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <p>
+                    You can log in using your email and password, or sign in using one of the
+                    supported social providers. If you don't yet have an account, you can <a href="/signup">register here</a> for free!
+                </p>
+
+                <button type="submit" class="btn btn-primary">Login</button>
+                <a href="/signup" class="btn btn-default">Create an account</a>
+            </div>
+        </div>
+        
+    </form>
+    
+    
+    <h3>Social connections</h3>
+    
+    <div class="btn-group">
+        <a href="/login/social?provider=google" class="btn btn-default">
+            <i class="fa fa-google"></i> Google</a>
+        <a href="/login/social?provider=facebook" class="btn btn-default">
+            <i class="fa fa-facebook"></i> Facebook</a>
+        <a href="/login/social?provider=twitter" class="btn btn-default">
+            <i class="fa fa-twitter"></i> Twitter</a>
+    </div>
+    
+</div>
