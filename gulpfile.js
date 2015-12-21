@@ -37,6 +37,13 @@ gulp.task('build', () => {
      'node_modules/react-dom/dist/**/*.*'   
     ])
     .pipe(gulp.dest('public/vendor/react'))
+    
+    // Fonts
+    gulp.src('node_modules/font-awesome/css/*.css')
+        .pipe(gulp.dest('public/vendor/fontawesome/css'))
+        
+    gulp.src('node_modules/font-awesome/fonts/*.*')
+        .pipe(gulp.dest('public/vendor/fontawesome/fonts'))
 
 })
 
