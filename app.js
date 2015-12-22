@@ -9,12 +9,25 @@ var exphbs = require('express-handlebars');
 var routes = require('./routes/index');
 
 var app = express();
+var hbs = exphbs.create({
+    defaultLayout: 'main',
+    extname: '.hbs',
+    helpers: {
+        hasFieldValidation: function(key) {
+            if (!key) return false
+            if (!this.modelState) return false
+            if (!this.modelState[key]) return false
+            
+            return true
+        },
+        fieldValidationMessage: function(key) {
+            return this.modelState.messages[key]
+        }
+    }
+})
 
 // view engine setup
-app.engine('hbs', exphbs({ 
-  defaultLayout: 'main',
-  extname: '.hbs' 
-}));
+app.engine('hbs', hbs.engine);
   
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -26,6 +39,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(require('./middleware/validate'))
 
 app.use('/', routes);
 app.use('/login', require('./routes/login'))

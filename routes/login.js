@@ -14,18 +14,23 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     
     var model = _.extend(req.body, {
-        messages: []
+        messages: [],
+        modelState: req.modelState
     })
-            
-    // Check username and password
-    accounts.findByEmail(req.body.email)
-        .then(account => {
-            
-            if (!account)
-                model.messages.push('Your account was not found')          
-            
-            res.render('login', model)
-        })
+           
+    if (req.modelState.isValid) {
+        // Check username and password
+        accounts.findByEmail(req.body.email)
+            .then(account => {
+                
+                if (!account)
+                    model.messages.push('Your account was not found')          
+                
+                res.render('login', model)
+            })
+    }
+    else
+        res.render('login', model)
 })
 
 module.exports = router;
