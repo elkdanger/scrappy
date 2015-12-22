@@ -1,0 +1,16 @@
+{{#if messages}}
+
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            {{title}}
+        </div>
+        <div class="panel-body">
+                <ul class="list-unstyled">
+                {{#each messages}}
+                    <li>{{this}}</li>
+                {{/each}}
+                </ul>
+          </div>
+    </div>
+        
+{{/if}}

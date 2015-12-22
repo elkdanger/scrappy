@@ -52,7 +52,10 @@ gulp.task('serve', ['build', 'browser-sync'], () => {
   plugins.nodemon({
     script: 'bin/www',
     ext: 'js',
-    env: { 'NODE_ENV': 'development' },
+    env: { 
+        'NODE_ENV': 'development',
+        'DEBUG': 'scrappy:*'
+    },
     ignore: [
         'node_modules',
         'public/vendor',

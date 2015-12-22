@@ -2,29 +2,26 @@
 
 <div class="col-sm-offset-3 col-sm-6">
 
+    {{> validationMessages title="Could not log you in"}}
+    
     <form action="/login" method="post" class="form-horizontal">
         
         <div class="form-group">
-            <label for="email" class="col-sm-3">Email address</label>
-            <div class="col-sm-9">
+            <label for="email" class="col-sm-4">Email address</label>
+            <div class="col-sm-8">
                 <input type="email" name="email" id="email" class="form-control" value={{ email }}>    
             </div>
         </div>
         
         <div class="form-group">
-            <label for="password" class="col-sm-3">Password</label>
-            <div class="col-sm-9">
+            <label for="password" class="col-sm-4">Password</label>
+            <div class="col-sm-8">
                 <input type="password" name="password" id="password" class="form-control">
             </div>
         </div>
         
         <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-9">
-                <p>
-                    You can log in using your email and password, or sign in using one of the
-                    supported social providers. If you don't yet have an account, you can <a href="/signup">register here</a> for free!
-                </p>
-
+            <div class="col-sm-offset-4 col-sm-8">
                 <button type="submit" class="btn btn-primary">Login</button>
                 <a href="/signup" class="btn btn-default">Create an account</a>
             </div>
