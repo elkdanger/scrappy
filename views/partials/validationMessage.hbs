@@ -1,4 +1,4 @@
 <!-- (for && modelState && modelState.messages[for])} -->
-{{#if modelState.hasModelError}}
+{{#hasFieldValidation for}}
     <span class="text-danger">{{fieldValidationMessage for}}</span>
-{{/if}}
+{{/hasFieldValidation}}

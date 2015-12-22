@@ -11,8 +11,8 @@ let sources = {
 /* Browser sync */
 gulp.task('browser-sync', () => {
   browserSync.init({
-    proxy: 'localhost:3000',
-    port: 4202,
+    proxy: 'localhost:4260',
+    port: 4250,
     open: false
   })
 })

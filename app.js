@@ -13,15 +13,27 @@ var hbs = exphbs.create({
     defaultLayout: 'main',
     extname: '.hbs',
     helpers: {
-        hasFieldValidation: function(key) {
-            if (!key) return false
-            if (!this.modelState) return false
-            if (!this.modelState[key]) return false
-            
-            return true
+        hasFieldValidation: function(key, options) {
+
+            if (!key) return
+            if (!this.modelState) return
+            if (this.modelState.keys[key] === undefined) return
+                
+            return options.fn(this)
         },
-        fieldValidationMessage: function(key) {
+        
+        fieldValidationMessage: function(key) {            
             return this.modelState.messages[key]
+        },
+        
+        validationClasses: function(key) {
+            console.log(key)
+            console.log(this.modelState)
+            if (!key) return
+            if (!this.modelState) return
+            if (this.modelState.keys[key] === undefined) return
+            if (this.modelState.keys[key] === false)
+                return 'has-error'
         }
     }
 })
