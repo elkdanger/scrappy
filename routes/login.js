@@ -14,11 +14,10 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     
     var model = _.extend(req.body, {
-        messages: [],
-        modelState: req.modelState
+        messages: []
     })
            
-    if (req.modelState.isValid) {
+    if (res.locals.modelState.isValid) {
         // Check username and password
         accounts.findByEmail(req.body.email)
             .then(account => {

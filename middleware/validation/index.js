@@ -24,15 +24,19 @@ let validators = {
 
 module.exports = (req, res, next) => {
     
-    debug(req.method)
-    debug(req.body)
-    debug(req.url)
+    // debug(req.method)
+    // debug(req.body)
+    // debug(req.url)
+    // debug(req.headers['content-type'])
     
-    if (req.method == 'POST' && validators[req.url]) {
+    if (req.method == 'POST' && validators[req.url] && req.headers['content-type'] == 'application/x-www-form-urlencoded') {
         
-        let v = validators[req.url]
+        debug('Validating posted form')
+        debug(req.body)        
+            
+        let v = validators[req.url]        
         
-        req.modelState = {
+        let modelState = {
             isValid: true,
             keys: {},
             messages: {},
@@ -74,17 +78,17 @@ module.exports = (req, res, next) => {
                 })
                 
                 if (!isValid) {
-                    req.modelState.messages[key] =
+                    modelState.messages[key] =
                         v[key].message ? v[key].message : `The ${ key } field is invalid`
                 }
                 
-                req.modelState.isValid = req.modelState.isValid && isValid                
-                req.modelState.keys[key] = isValid
+                modelState.isValid = modelState.isValid && isValid                
+                modelState.keys[key] = isValid
             }
         })   
+        
+        res.locals.modelState = modelState
     }
-    
-    debug(req.modelState)
     
     next()
 }

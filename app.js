@@ -27,11 +27,10 @@ var hbs = exphbs.create({
         },
         
         validationClasses: function(key) {
-            console.log(key)
-            console.log(this.modelState)
             if (!key) return
             if (!this.modelState) return
             if (this.modelState.keys[key] === undefined) return
+            
             if (this.modelState.keys[key] === false)
                 return 'has-error'
         }
@@ -52,7 +51,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(require('./middleware/validate'))
+app.use(require('./middleware/validation'))
 
 app.use('/', routes);
 app.use('/login', require('./routes/login'))
