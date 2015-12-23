@@ -8,6 +8,7 @@
     "test": "mocha tests/"
   },
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.1.1",
     "body-parser": "~1.13.2",
     "config": "^1.17.1",

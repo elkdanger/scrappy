@@ -24,7 +24,9 @@ router.post('/', (req, res) => {
                 
                 if (!account)
                     model.messages.push('Your account was not found')          
-                
+                else
+                    debug(account)
+                    
                 res.render('login', model)
             })
     }
