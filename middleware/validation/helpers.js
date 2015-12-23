@@ -17,7 +17,7 @@ module.exports = {
         return this.modelState.messages[key]
     },
     
-    validationClasses: function(key) {
+    "validation-css": function(key) {
         if (!key) return
         if (!this.modelState) return
         if (this.modelState.keys[key] === undefined) return

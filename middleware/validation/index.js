@@ -18,8 +18,26 @@ let validators = {
             message: 'Please enter a valid email address'
         },
         password: 'isValue'
-    }
+    },
     
+    '/signup': {
+        email: {
+            methods: 'isEmail',
+            message: 'Please enter a valid email address'
+        },
+        password: {
+            methods: 'isLength:6,isAlphanumeric',
+            message: 'Please enter a password which is at least 6 letters and numbers'
+        },
+        
+        custom(modelState, req) {
+            
+            if (req.body.confirmPassword !== req.body.password) {
+                modelState.addModelError('confirmPassword', 'Your passwords do not match')   
+            }
+            
+        }
+    }
 }
 
 module.exports = (req, res, next) => {
@@ -47,6 +65,12 @@ module.exports = (req, res, next) => {
             
             hasModelError(key) {                
                 return this.messages[key] == undefined
+            },
+            
+            addModelError(key, message) {
+                this.isValid = false
+                this.keys[key] = false
+                this.messages[key] = message
             }
         }
         
@@ -86,6 +110,10 @@ module.exports = (req, res, next) => {
                 modelState.keys[key] = isValid
             }
         })   
+        
+        if (v.custom) {
+            v.custom(modelState, req)
+        }
         
         res.locals.modelState = modelState
     }
