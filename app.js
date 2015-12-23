@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
+var _ = require('underscore')
 
 var routes = require('./routes/index');
 
@@ -12,29 +13,8 @@ var app = express();
 var hbs = exphbs.create({
     defaultLayout: 'main',
     extname: '.hbs',
-    helpers: {
-        hasFieldValidation: function(key, options) {
-
-            if (!key) return
-            if (!this.modelState) return
-            if (this.modelState.keys[key] === undefined) return
-                
-            return options.fn(this)
-        },
-        
-        fieldValidationMessage: function(key) {            
-            return this.modelState.messages[key]
-        },
-        
-        validationClasses: function(key) {
-            if (!key) return
-            if (!this.modelState) return
-            if (this.modelState.keys[key] === undefined) return
-            
-            if (this.modelState.keys[key] === false)
-                return 'has-error'
-        }
-    }
+    helpers: _.extend({},
+        require('./middleware/validation/helpers'))
 })
 
 // view engine setup
