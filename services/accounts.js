@@ -37,6 +37,7 @@ module.exports = {
                 let collection = context.collection('accounts')
                         
                 collection.ensureIndex('email', { unique: true }, function(err, result) {
+                    
                     collection.insertOne({
                         email: email,
                         password: bcrypt.hashSync(password),
