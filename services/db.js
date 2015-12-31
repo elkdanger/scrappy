@@ -7,15 +7,20 @@ let config = require('config').get('database')
 let debug = require('debug')('scrappy:db')
 let Promise = require('bluebird')
 
-let connect = Promise.promisify(mongodb.connect)
+let client = Promise.promisifyAll(mongodb)
 
 module.exports = {
     
     /**
+     * Async mongo client
+     */
+    client: client,
+    
+    /**
      * Opens a connection to the database
      */
-    open() {
-        return connect(config.connectionString)
+    connect() {
+        return client.connectAsync(config.connectionString)
     },
     
     /**

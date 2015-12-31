@@ -4,7 +4,6 @@ let db = require('./db')
 let debug = require('debug')('scrappy:accounts')
 let assert = require('assert')
 let bcrypt = require('bcrypt-nodejs')
-let Promise = require('bluebird')
 
 module.exports = {
     
@@ -12,16 +11,9 @@ module.exports = {
      * Finds an account given the email address
      * @param email The email address
      */
-    findByEmail(email) {
-        
-      return db.open().then(context => {
-
-          let acc = context.collection('accounts')
-            .findOne({ email: email })
-          
-          return acc
-      })  
-        
+    findByEmail(email) {        
+      return db.connect().then(context => 
+        context.collection('accounts').findOne({ email: email }))        
     },
     
     /**
@@ -30,23 +22,17 @@ module.exports = {
      */
     createAccount(email, password) {
         
-        return new Promise((resolve, reject) => {
-            
-            db.open().then(context => { 
-            
+        return db.connect()
+            .then(context => {
                 let collection = context.collection('accounts')
-                        
-                collection.ensureIndex('email', { unique: true }, function(err, result) {
-                    
-                    collection.insertOne({
-                        email: email,
-                        password: bcrypt.hashSync(password),
-                        setupComplete: false
-                    }, (err, result) => {
-                        resolve(result)
-                    })
-                })           
+                
+                return collection.ensureIndexAsync('email', { unique: true })
+                    .then(result =>                       
+                        collection.insertOneAsync({
+                            email: email,
+                            password: bcrypt.hashSync(password),
+                            setupComplete: false
+                        }))                
             })
-        })
     }
 }

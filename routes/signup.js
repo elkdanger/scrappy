@@ -14,9 +14,18 @@ router.post('/', (req, res) => {
     
     if (res.locals.modelState.isValid) {
         
-        accounts.createAccount(req.body.email, req.body.password)
-            .then(() => {
-                res.redirect('/')
+        accounts.findByEmail(req.body.email)
+            .then(account => {
+                
+                if (!account)
+                    accounts.createAccount(req.body.email, req.body.password)
+                        .then(() => {
+                            res.redirect('/')
+                        })
+                else {
+                    res.locals.modelState.addModelError('email', 'This email address has already been taken')
+                    res.render('signup', req.body)
+                }                
             })
     }
     else
