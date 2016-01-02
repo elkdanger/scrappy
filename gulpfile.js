@@ -44,6 +44,10 @@ gulp.task('build', () => {
         
     gulp.src('node_modules/font-awesome/fonts/*.*')
         .pipe(gulp.dest('public/vendor/fontawesome/fonts'))
+        
+    // jQuery
+    gulp.src('node_modules/jquery/dist/*.*')
+        .pipe(gulp.dest('public/vendor/jquery'))
 
 })
 
@@ -54,7 +58,7 @@ gulp.task('serve', ['build', 'browser-sync'], () => {
     ext: 'js',
     env: { 
         'NODE_ENV': 'development',
-        'DEBUG': 'scrappy:*'
+        'DEBUG': 'scrappy:*, passport'
     },
     ignore: [
         'node_modules',

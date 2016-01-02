@@ -1,8 +1,6 @@
 'use strict'
 
 let mongodb = require('mongodb')
-let MongoClient = mongodb.MongoClient
-let assert = require('assert')
 let config = require('config').get('database')
 let debug = require('debug')('scrappy:db')
 let Promise = require('bluebird')

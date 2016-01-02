@@ -4,7 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session')
 var exphbs = require('express-handlebars');
+var passport = require('passport')
+var flash = require('connect-flash')
 var _ = require('underscore')
 
 var routes = require('./routes/index');
@@ -28,10 +31,26 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+//app.use(cookieParser('keyboard cat'));
+
+app.use(session({ 
+    secret: 'keyboard cat',
+    cookie: { maxAge: 60000 },
+    resave: false,
+    saveUninitialized: true
+}))
+
+app.use(flash())
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(require('./middleware/validation'))
+app.use(require('./middleware/flash'))
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+require('./passport')
 
 app.use('/', routes);
 app.use('/login', require('./routes/login'))

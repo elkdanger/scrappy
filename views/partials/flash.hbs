@@ -1,0 +1,22 @@
+
+{{#if infoMessages }}
+
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{#each infoMessages}}
+            {{this}}<br/>
+        {{/each}}
+    </div>
+
+{{/if}}
+
+{{#if errorMessages }}
+
+    <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{#each errorMessages}}
+            {{this}}<br/>
+        {{/each}}
+    </div>
+
+{{/if}}
